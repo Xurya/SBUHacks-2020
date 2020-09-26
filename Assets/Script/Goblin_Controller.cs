@@ -32,11 +32,15 @@ public class Goblin_Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(this.gameObject.transform.position, player.gameObject.transform.position) < 10) {
+        if (Vector3.Distance(this.gameObject.transform.position, player.gameObject.transform.position) < 30) {
             this.transform.LookAt(player.transform);
         }
-        if (Vector3.Distance(this.gameObject.transform.position, player.gameObject.transform.position) < 1) {
-            // anim.SetBool()
+        if (Vector3.Distance(this.gameObject.transform.position, player.gameObject.transform.position) < 10) {
+            anim.SetBool("smash", true);
         }
+        else {
+            anim.SetBool("smash", false);
+        }
+        Debug.Log(Vector3.Distance(this.gameObject.transform.position, player.gameObject.transform.position));
     }
 }
