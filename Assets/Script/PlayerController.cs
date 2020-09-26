@@ -37,8 +37,5 @@ public class PlayerController : MonoBehaviour
         }else{
             rb.velocity = Vector3.zero;
         }
-
-        animator.SetFloat("VelX", horizontal);
-        animator.SetFloat("VelY", vertical);
     }
 }
