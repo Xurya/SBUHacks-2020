@@ -5,14 +5,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    [Header("Dependencies")]
     public Rigidbody rb;
     public float speed;
     public float turnSmoothTime;
     public Transform cam;
-
     public Animator animator;
+    public float attackActive;
 
-    float turnSmoothVelocity;
+    [Header("State")]
+    public int state = 0;
+    public int args = 0;
+    public float horizontal = 0f;
+    public float vertical = 0f;
+    public float cooldown = 0f;
+
+    private float turnSmoothVelocity;
 
     // Start is called before the first frame update
     void Start()
@@ -23,8 +31,53 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        if(cooldown>0){
+            cooldown-=Time.deltaTime;
+        }
+        /*
+         * State Controller
+         * 
+         * 0: Default
+         * 1: Attack
+         */
+        switch (state) {
+            case 1:
+                // Attack();
+                // InputUpdate();
+                // Movement();
+                // Transition();
+                // break;
+            default:
+                InputUpdate();
+                Movement();
+                Transition();
+                break;
+        }
+    }
+
+    void Attack(){
+        if(args == 3){
+            args = 0;
+        }else{
+            args++;
+            cooldown = attackActive;
+        }
+        animator.SetInteger("Attack", args);
+    }
+
+    void Transition() {
+        if(Input.GetAxisRaw("Fire1") != 0){
+            state = 1;
+            args = -1;
+        }
+    }
+
+    void InputUpdate(){
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+    }
+
+    void Movement(){
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if(direction.magnitude >= 0.1f){
