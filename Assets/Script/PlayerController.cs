@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour
     public float turnSmoothTime;
     public Transform cam;
 
-    public Animator animator;
-
     float turnSmoothVelocity;
 
     // Start is called before the first frame update
@@ -37,8 +35,5 @@ public class PlayerController : MonoBehaviour
         }else{
             rb.velocity = Vector3.zero;
         }
-
-        animator.SetFloat("VelX", rb.velocity.x);
-        animator.SetFloat("VelY", rb.velocity.y);
     }
 }
